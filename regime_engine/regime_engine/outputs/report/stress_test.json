@@ -1,0 +1,36 @@
+{
+  "runs_1000": {
+    "prob_of_ruin": 0.0,
+    "expected_max_drawdown": -0.2784,
+    "worst_max_drawdown": -0.5936,
+    "worst_case_terminal_multiple": 0.532,
+    "median_terminal_multiple": 1.447,
+    "VaR_95_daily": -0.01,
+    "CVaR_95_daily": -0.0147,
+    "VaR_99_daily": -0.0168,
+    "CVaR_99_daily": -0.0242
+  },
+  "runs_2000": {
+    "prob_of_ruin": 0.001,
+    "expected_max_drawdown": -0.2787,
+    "worst_max_drawdown": -0.6481,
+    "worst_case_terminal_multiple": 0.402,
+    "median_terminal_multiple": 1.455,
+    "VaR_95_daily": -0.01,
+    "CVaR_95_daily": -0.0147,
+    "VaR_99_daily": -0.0168,
+    "CVaR_99_daily": -0.0242
+  },
+  "runs_5000": {
+    "prob_of_ruin": 0.0026,
+    "expected_max_drawdown": -0.2798,
+    "worst_max_drawdown": -0.7084,
+    "worst_case_terminal_multiple": 0.335,
+    "median_terminal_multiple": 1.459,
+    "VaR_95_daily": -0.01,
+    "CVaR_95_daily": -0.0147,
+    "VaR_99_daily": -0.0168,
+    "CVaR_99_daily": -0.0242
+  },
+  "ruin_threshold": 0.5
+}

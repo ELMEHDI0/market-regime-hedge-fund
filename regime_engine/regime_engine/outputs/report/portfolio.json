@@ -1,0 +1,48 @@
+{
+  "static_allocations": {
+    "equal_weight": {
+      "SPY": 0.2,
+      "QQQ": 0.2,
+      "GLD": 0.2,
+      "BTC-USD": 0.2,
+      "EURUSD": 0.2
+    },
+    "inverse_vol": {
+      "SPY": 0.153,
+      "QQQ": 0.122,
+      "GLD": 0.317,
+      "BTC-USD": 0.072,
+      "EURUSD": 0.337
+    },
+    "risk_parity": {
+      "SPY": 0.151,
+      "QQQ": 0.124,
+      "GLD": 0.323,
+      "BTC-USD": 0.071,
+      "EURUSD": 0.331
+    },
+    "max_diversification": {
+      "SPY": 0.149,
+      "QQQ": 0.127,
+      "GLD": 0.329,
+      "BTC-USD": 0.07,
+      "EURUSD": 0.325
+    },
+    "vol_targeted_equal_weight": {
+      "SPY": 0.028,
+      "QQQ": 0.028,
+      "GLD": 0.028,
+      "BTC-USD": 0.028,
+      "EURUSD": 0.028
+    }
+  },
+  "regime_portfolio_metrics": {
+    "cagr": 0.0888,
+    "total_return": 1.741,
+    "sharpe": 1.189,
+    "sortino": 1.646,
+    "calmar": 0.401,
+    "max_drawdown": -0.2217,
+    "vol_annual": 0.056
+  }
+}

@@ -1,0 +1,38 @@
+
+################ REGIME EXPLANATIONS — SPY ################
+
+=== Regime explanation @ 2026-04-22 ===
+FINAL REGIME : TREND_UP
+DECISION     : majority {'TREND_UP': np.int64(2), 'RANGE': np.int64(1)}
+FEATURES     : ADX=16  fastMA<slowMA  ATR%=1.11%  rVol=10.0%  volPctile=25%  1mDD=-2.9%
+DETECTORS    :
+   - rule_ma_atr : RANGE          (ADX 16 ≤ 20 (chop))
+   - vol_cluster : TREND_UP       (mid vol (pctile 42%), 50d slope +1.4% -> directional)
+   - hmm         : TREND_UP       (HMM state 1 (mean-ret/vol mapped))
+
+=== Regime explanation @ 2026-06-15 ===
+FINAL REGIME : TREND_DOWN
+DECISION     : majority {'TREND_DOWN': np.int64(2), 'RANGE': np.int64(1)}
+FEATURES     : ADX=26  fastMA<slowMA  ATR%=1.21%  rVol=8.1%  volPctile=3%  1mDD=0.0%
+DETECTORS    :
+   - rule_ma_atr : TREND_DOWN     (fastMA<slowMA and ADX 26 ≥ 20)
+   - vol_cluster : TREND_DOWN     (mid vol (pctile 69%), 50d slope -7.7% -> directional)
+   - hmm         : RANGE          (HMM state 3 (mean-ret/vol mapped))
+
+=== Regime explanation @ 2026-05-05 ===
+FINAL REGIME : RANGE
+DECISION     : tie {'RANGE': np.int64(1), 'TREND_UP': np.int64(1), 'HIGH_VOL_CRASH': np.int64(1)} -> rule tiebreak RANGE
+FEATURES     : ADX=14  fastMA<slowMA  ATR%=1.09%  rVol=11.0%  volPctile=42%  1mDD=-4.5%
+DETECTORS    :
+   - rule_ma_atr : RANGE          (ADX 14 ≤ 20 (chop))
+   - vol_cluster : TREND_UP       (mid vol (pctile 48%), 50d slope +0.5% -> directional)
+   - hmm         : HIGH_VOL_CRASH (HMM state 0 (mean-ret/vol mapped))
+
+=== Regime explanation @ 2026-06-02 ===
+FINAL REGIME : HIGH_VOL_CRASH
+DECISION     : CRASH veto from causal rule engine (capital preservation)
+FEATURES     : ADX=34  fastMA<slowMA  ATR%=1.34%  rVol=32.9%  volPctile=96%  1mDD=-7.5%
+DETECTORS    :
+   - rule_ma_atr : HIGH_VOL_CRASH (vol pctile 96% ≥ 90% or 1m DD -7.5% ≤ -10%)
+   - vol_cluster : TREND_DOWN     (mid vol (pctile 89%), 50d slope -10.3% -> directional)
+   - hmm         : RANGE          (HMM state 3 (mean-ret/vol mapped))

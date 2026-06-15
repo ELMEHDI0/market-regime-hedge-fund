@@ -1,0 +1,14 @@
+{
+  "alpha_annual": -0.001,
+  "market_beta": 0.078,
+  "factor_betas": {
+    "MKT": 0.078,
+    "MOM": 0.023,
+    "LOWVOL": -0.017,
+    "CARRY": 0.044
+  },
+  "r_squared": 0.011,
+  "information_ratio": -0.43,
+  "tracking_error_annual": 0.1531,
+  "note": "SIZE/VALUE = N/A (supply external factor columns to extend)."
+}

@@ -1,0 +1,26 @@
+{
+  "strategy": {
+    "cagr": 0.031,
+    "total_return": 0.4365,
+    "sharpe": 0.153,
+    "sortino": 0.215,
+    "calmar": 0.199,
+    "max_drawdown": -0.1562,
+    "vol_annual": 0.1061,
+    "n_trades": 887,
+    "win_rate": 0.526,
+    "profit_factor": 1.471,
+    "exposure_time": 0.964
+  },
+  "spy_buy_hold": {
+    "cagr": 0.0994,
+    "total_return": 2.076,
+    "sharpe": 0.682,
+    "sortino": 0.967,
+    "calmar": 0.312,
+    "max_drawdown": -0.3186,
+    "vol_annual": 0.1203
+  },
+  "drawdown_breaches": 0,
+  "halted_at_end": false
+}

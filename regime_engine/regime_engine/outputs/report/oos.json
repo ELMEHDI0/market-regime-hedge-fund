@@ -1,0 +1,21 @@
+{
+  "split_date": "2023-01-06",
+  "in_sample": {
+    "cagr": 0.0503,
+    "total_return": 0.5025,
+    "sharpe": 0.332,
+    "sortino": 0.465,
+    "calmar": 0.322,
+    "max_drawdown": -0.1562,
+    "vol_annual": 0.104
+  },
+  "out_of_sample": {
+    "cagr": -0.0129,
+    "total_return": -0.0451,
+    "sharpe": -0.242,
+    "sortino": -0.343,
+    "calmar": -0.083,
+    "max_drawdown": -0.1546,
+    "vol_annual": 0.111
+  }
+}

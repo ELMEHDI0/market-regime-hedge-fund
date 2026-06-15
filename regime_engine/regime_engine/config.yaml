@@ -1,0 +1,79 @@
+# =====================================================================
+# Market Regime + Strategy Engine — Master Configuration
+# Every magic number lives here. Nothing is hard-coded downstream.
+# =====================================================================
+
+data:
+  tickers: ["SPY", "QQQ", "GLD", "BTC-USD", "EURUSD"]
+  start: "2015-01-01"
+  end: null                       # null = today
+  benchmark: "SPY"                # buy & hold comparison
+  source: "auto"                  # auto | yfinance | synthetic
+  storage: "parquet"              # parquet | sqlite
+  store_path: "outputs/market_data"
+  # Calendar used to align all assets onto one trading-day index.
+  align_calendar: "SPY"
+
+regime:
+  # Lookbacks for the causal (no-lookahead) rule engine.
+  ma_fast: 50
+  ma_slow: 200
+  atr_window: 14
+  adx_window: 14
+  vol_window: 20                  # realised vol window (trading days)
+  vol_lookback_pctile: 252        # window for the vol percentile rank
+  # Thresholds
+  adx_trend_min: 20.0             # ADX >= this => directional trend
+  adx_range_max: 20.0             # ADX <  this => range / chop (no dead zone)
+  crash_vol_pctile: 0.90          # vol percentile that flips crash mode on
+  crash_drawdown: -0.10           # rolling 1m drawdown that flips crash mode
+  # HMM is analytical only by default (see README "no lookahead" note).
+  hmm_enabled: true
+  hmm_states: 4
+  hmm_mode: "analytical"          # analytical | walkforward
+  hmm_walkforward_refit: 63       # refit cadence in trading days if walkforward
+
+strategy:
+  trend:
+    pullback_atr: 0.5             # enter on shallow pullback to fast MA
+    stop_atr: 2.5
+    trail_atr: 3.0
+  mean_reversion:
+    z_window: 20
+    z_entry: 2.0                  # |z| beyond this => fade
+    z_exit: 0.3                   # revert to mean => exit
+    stop_atr: 2.0
+  vol_breakout:
+    donchian: 20                  # breakout channel length
+    stop_atr: 2.0
+    trail_atr: 2.5
+
+risk:
+  risk_per_trade: 0.0075          # 0.75% of equity at risk per trade (0.5%-1%)
+  max_portfolio_drawdown: 0.20    # hard stop: flatten + halt if breached
+  drawdown_cooldown: 21            # 0 = permanent hard stop; >0 = re-arm after N days
+  vol_target_annual: 0.15         # portfolio vol target for sizing scale
+  corr_window: 60                 # rolling correlation window
+  corr_threshold: 0.6             # above this, haircut clustered exposure
+  max_gross_exposure: 1.5         # cap on sum of |position weights|
+  max_weight_per_asset: 0.5
+
+backtest:
+  initial_capital: 100000.0
+  execution: "next_open"          # signals at close(t) -> fill at open(t+1)
+  commission_bps: 1.0             # per side, in basis points
+  slippage_model: "vol"           # fixed | vol
+  slippage_bps: 1.0               # used if slippage_model == fixed
+  slippage_atr_mult: 0.05         # used if slippage_model == vol (frac of ATR)
+  rebalance_band: 0.05            # ignore weight changes smaller than this (cuts churn)
+
+institutional:
+  feature: "monte_carlo"          # monte_carlo (headline) | oos_split also run
+  mc_runs: 2000
+  mc_block: 5                     # block bootstrap length (days) to keep autocorr
+  oos_split: 0.70                 # in-sample fraction for the OOS engine
+
+report:
+  out_dir: "outputs/report"
+  rf_annual: 0.02                 # risk-free for Sharpe/Sortino
+  periods_per_year: 252
