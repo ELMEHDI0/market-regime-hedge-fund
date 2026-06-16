@@ -1,19 +1,8 @@
 Market Regime + Strategy Engine — Mini Quant Research System
 
-A modular quantitative research framework that classifies market regimes, allocates capital across regime-dependent strategies, and evaluates performance using institutional-grade backtesting, risk controls, and stress testing.
+A modular quantitative research framework that classifies market regimes, allocates capital across regime-dependent strategies, and evaluates performance using institutional-style backtesting, risk controls, and stress testing.
 
-The system is designed for research reproducibility, explainability, and walk-forward validation, not curve-fitted performance claims.
-
-Performance Snapshot
-Metric	Value
-CAGR	X%
-Sharpe Ratio	X.XX
-Max Drawdown	-X%
-Sortino Ratio	X.XX
-Win Rate	X%
-Benchmark (SPY)	+X%
-
-Equity and drawdown charts are generated in /outputs/report/.
+Built for research reproducibility, explainability, and walk-forward validation, not curve-fitting or performance storytelling.
 
 Core Idea
 
@@ -22,16 +11,16 @@ Markets behave differently depending on regime conditions. This system:
 Detects market regimes (trend, range, high volatility, crash)
 Activates only strategies suited to current regime
 Sizes risk dynamically
-Evaluates results with no-lookahead backtesting
+Evaluates results using no-lookahead backtesting
 
-If the system cannot explain a decision, it is not allowed to trade it.
+If the system cannot explain a decision, it does not trade it.
 
 System Pipeline
 Data → Regime Detection → Strategy Selection → Risk Engine → Portfolio Construction → Backtest → Reporting
 Architecture
 regime_engine/
 ├── run.py                  # main orchestrator
-├── config.yaml             # all parameters centralized
+├── config.yaml             # centralized configuration
 ├── src/
 │   ├── data/loader.py      # ingestion + cleaning + alignment
 │   ├── regime/             # regime detection logic
@@ -47,7 +36,8 @@ regime_engine/
     ├── report/
     ├── trades.csv
     ├── equity_curve.png
-    └── stress tests
+    ├── drawdown_curve.png
+    └── stress_tests/
 Data Layer
 
 Assets:
@@ -64,7 +54,7 @@ Store in Parquet (or SQLite fallback)
 Fallback:
 
 Synthetic regime generator ensures full pipeline execution when live data is unavailable
-(used for validation only, not performance evaluation)
+(used for validation only, not performance interpretation)
 Regime Detection
 
 Market states:
@@ -75,7 +65,7 @@ RANGE
 HIGH_VOL_CRASH
 Detectors
 Detector	Method	Causal
-Trend Regime	MA + ATR + ADX + drawdown	Yes
+Trend Regime	MA + ATR + ADX + drawdown logic	Yes
 Volatility Regime	EWMA volatility model	Yes
 HMM Regime	Gaussian HMM on returns	No (research only)
 Ensemble Logic
@@ -84,7 +74,7 @@ Otherwise majority vote
 Fully explainable decision output per timestamp
 Strategies
 Strategy	Active Regime	Logic
-Trend Following	TREND_UP / DOWN	MA momentum + ATR trailing stop
+Trend Following	TREND_UP / TREND_DOWN	MA momentum + ATR trailing stop
 Mean Reversion	RANGE	Bollinger z-score reversion
 Vol Breakout	HIGH_VOL_CRASH	Donchian breakout system
 
@@ -92,7 +82,7 @@ Each trade includes:
 
 Entry reason
 Exit condition
-Stop distance (ATR-based)
+ATR-based stop distance
 Risk Engine
 
 Hard constraints:
@@ -110,7 +100,7 @@ Backtesting Engine
 Guarantees:
 
 No lookahead bias
-No repainting indicators
+No indicator repainting
 Realistic slippage + commission modeling
 Execution at t+1 based on t signals
 
@@ -143,7 +133,7 @@ Parameter grid search on training set
 Evaluation on unseen test set
 Final stitched out-of-sample equity curve
 
-This is the closest approximation to real-world forward performance.
+This is the closest approximation to real forward performance.
 
 Outputs
 
@@ -157,6 +147,9 @@ trades.csv
 regimes.csv
 summary.json
 walk_forward.json
+
+All quantitative results are automatically generated at runtime in /outputs/.
+
 Limitations
 Synthetic mode is not investable signal
 HMM is non-causal unless run in walk-forward mode
@@ -164,11 +157,11 @@ Slippage/costs are modeled, not exchange exact
 Research system, not live trading infrastructure
 Summary
 
-A modular, explainable quantitative trading system built around:
+A modular, explainable quantitative research system built around:
 
-regime detection
-risk-first execution
-walk-forward validation
-institutional reporting standards
+Regime detection
+Risk-first execution
+Walk-forward validation
+Institutional reporting structure
 
-Designed for research, not storytelling.
+Designed for testing ideas, not pretending to be a hedge fund.
